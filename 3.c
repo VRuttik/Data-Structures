@@ -8,7 +8,7 @@ int main() {
     int vowelsCount = 0;
 
     printf("Enter the string: ");
-    scanf("%s", text);
+    scanf("%[^\n]", text);
 
     for (int i = 0; text[i] != '\0'; ++i) {
         char currentChar = tolower(text[i]);
