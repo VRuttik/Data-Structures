@@ -1,58 +1,51 @@
-/* Trapping Rain Water.
-Input: height = [4,2,0,3,2,5]
-Output: 9
+/*
+Longest Substring Without Repeating Characters.
+
+Input: s = "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
 */
 
 #include<stdio.h>
+#include<string.h>
 
-int trap(int height[], int n){
-    if (n <= 2)
+int lengthOfLongestSubstring(char* s){
+
+    int n = 0;
+    int start = 0;
+    int maxLen = 0;
+    int charIndex[256];// Assuming ASCII characters
+
+    for(int i=0;i<256;i++){
+        charIndex[i] = -1;
+    }
+
+    while (s[n] != '\0')
     {
-        return 0; // Not enough bars to trap water.
+        if(charIndex[s[n]] != -1 && charIndex[s[n]] >= start){
+            start = charIndex[s[n]] + 1;
+        }
+
+        charIndex[s[n]] = n;
+        n++;
+
+        if(n - start > maxLen){
+            maxLen = n - start;
+        }
     }
 
-    int leftMax[n];
-    int rightMax[n];
-
-    // Initialize leftMax array
-    leftMax[0] = height[0];
-    for(int i=1;i<n;i++){
-        leftMax[i] = (leftMax[i - 1] > height[i] ? leftMax[i - 1] : height[i]);
-    }
-
-    // Initialize rightMax array
-    rightMax[n - 1] = height[n - 1];
-    for (int i = n -2; i >= 0; --i)
-    {
-        rightMax[i] = (rightMax[i + 1] > height[i]) ? rightMax[i + 1] : height[i];
-    }
-
-    int trappedWater = 0;
-
-    // Calculate trapped water for each bar.
-    for(int i=0;i<n;i++){
-        int minHeight = (leftMax[i] < rightMax[i]) ? leftMax[i] : rightMax[i];
-        trappedWater += (minHeight - height[i]);
-    }
-
-    return trappedWater;
+    return maxLen;
 }
-
 int main(){
 
-    int n;
-    printf("\nEnter the size of the elevation map: ");
-    scanf("%d", &n);
+    char user_input[100];
 
-    int height[n];
-    printf("\nEnter %d elements for the elevation map:\n", n);
-    for (int i = 0; i < n; i++)
-    {
-        scanf("%d", &height[i]);
-    }
+    printf("\n Enter the string: ");
+    scanf("%s", user_input);
 
-    int result = trap(height, n);
-    printf("\n The amount of trapped water is: %d\n", result);
+    int result = lengthOfLongestSubstring(user_input);
+    printf("Length of the longest substring without repeating characters: %d\n", result);
 
     return 0;
 }
