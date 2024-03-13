@@ -68,7 +68,7 @@ int main(){
     // Display the result
     printf("Symmetric Difference: { ");
     for(int i=0;i<resultSize;i++){
-        printf("%d", result[i]);
+        printf("%d ", result[i]);
     }
     printf("}\n");
 
